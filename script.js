@@ -17,3 +17,17 @@ document.getElementById("signIn-btn").addEventListener('click',function(){
         alert("Login Failed")
     }
 })
+
+
+// Spinner 
+
+const manageSpinner = (status) => {
+    if(status==true){
+        document.getElementById("spinner").classList.remove("hidden")
+        document.getElementById("word-container").classList.add("hidden")
+    }
+    else{
+        document.getElementById("spinner").classList.add("hidden")
+        document.getElementById("word-container").classList.remove("hidden")
+    }
+}
