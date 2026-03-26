@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Github Issue Tracker</title>
+
+    <!-- DaisyUI and Tailwind -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <!-- Font: Geist -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        * {
+            font-family: "Geist", sans-serif;
+            ;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-100">
+
+    <!-- login section -->
+    <section id="logIn-section" class="h-screen flex justify-center items-center hidden">
+        <fieldset class="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4 flex flex-col
+        items-center justify-center space-y-5">
+            <img src="./assets/github-logo.png" alt="">
+
+            <div class="text-center">
+                <h2 class="text-2xl font-semibold ">GitHub Issues Tracker</h2>
+                <p>Sign in to manage your issues</p>
+            </div>
+            <div class="">
+                <label class="label">Username</label>
+                <input id="username" type="text" class="input" placeholder="Enter Username" />
+                <p class="text-[#4A00FF]">Default:admin</p>
+
+                <label class="label mt-3">Password</label>
+                <input id="password" type="password" class="input" placeholder="Enter Password" />
+                <p class="text-[#4A00FF]">Default:admin123</p>
+            </div>
+
+            <button id="signIn-btn" class="btn btn-primary mt-4">Sign In</button>
+        </fieldset>
+    </section>
+
+
+
+    <!-- DASHBOARD SECTION -->
+
+    <!-- Header Section -->
+    <header>
+        <div class="navbar bg-base-100 shadow-sm flex justify-between">
+            <div class="flex items-center gap-2 ">
+                <img src="./assets/github-logo.png" alt="" class="w-[36px] h[37px]">
+                <h2 class="font-bold text-xl">Github Issue Tracker</h2>
+            </div>
+
+            <div class="join flex gap-3">
+                <div>
+                    <label class="input validator join-item rounded-sm">
+
+                        <i class="fa-brands fa-sistrix"></i>
+
+                        <input id="input-search" type="text" placeholder="Search issues" required />
+                    </label>
+                    <div class="validator-hint hidden">Search here</div>
+                </div>
+                <button id="btn-search" class="btn btn-primary rounded-sm">+ New Issues</button>
+            </div>
+    </header>
+
+
+    <main class="w-[80%] mx-auto">
+
+        <!-- btn section -->
+
+        <div class="bg-white px-4 py-3 mt-12 rounded-md">
+            <div class=" space-x-1">
+
+                <button onclick="toggleStyle('all-filter-btn')" class="btn btn-primary px-5 py-2"
+                    id="all-filter-btn">All</button>
+                <button onclick="toggleStyle('thriving-btn')" class="btn  bg-white text-gray-400 px-5 py-2"
+                    id="open-btn">Open</button>
+                <button onclick="toggleStyle('struggling-btn')" class="btn  bg-white text-gray-400 px-5 py-2"
+                    id="Closed-btn">Closed</button>
+
+            </div>
+        </div>
+
+
+
+
+        <section class="bg-white flex justify-between items-center px-4 py-3 mt-5 rounded-md">
+
+            <!-- title -->
+            <div class="flex items-center gap-3">
+
+
+                <div class="bg-[#ECE4FF]  border border-none p-1 rounded-full">
+
+                    <img src="./assets/Aperture.png" alt="">
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold">50 Issues</h3>
+                    <p class="text-neutral/50">Track and manage project issues</p>
+                </div>
+            </div>
+
+
+            <!-- open and closed indicator -->
+            <div class="flex items-center gap-1">
+                <div class="bg-green-500 w-3 h-3 border border-none rounded-full">
+                </div>
+                <h3 class="mr-2">Open</h3>
+                <div class="bg-purple-600 w-3 h-3 border border-none rounded-full">
+                </div>
+                <h3>Closed</h3>
+            </div>
+
+            <!-- cards -->
+
+        </section>
+
+
+        <!-- Card Section -->
+        <section class="py-4 px-2 col-span-4 bg-[#fbfbfb] ">
+            <div class="grid grid-cols-4 gap-3 ">
+                <div class="card card-border bg-base-100 shadow-xl border-t-4 border-green-600 ">
+                    <div class="card-body">
+                        <div class="flex justify-between items-center">
+                            <img src="./assets/Open-Status.png" alt="">
+
+                            <h3
+                                class="text-[12px] font-medium text-[#ef4444] bg-[#feecec] text-center rounded-2xl px-4 py-1">
+                                HIGH</h3>
+
+                        </div>
+
+                        <h2 class="card-title">Fix navigation menu on mobile devices</h2>
+                        <p>The navigation menu doesn't collapse properly on mobile devices...
+                        </p>
+
+                        <div class="flex gap-2">
+
+                            <h3
+                                class="text-[12px] font-medium text-[#ef4444] bg-[#feecec] text-center rounded-2xl p-2 border border-[#fecaca]">
+                                BUG</h3>
+
+
+                            <h3
+                                class="text-[12px] font-medium text-[#d97706] bg-[#fff8db] text-center rounded-2xl p-2 border border-[#fde68a]">
+                                HELP WANTED</h3>
+
+                        </div>
+
+                        
+
+                        <div class="relative -mx-6 my-1">
+                            <hr class="w-full border-t border-gray-100">
+                        </div>
+
+                        <div class="text-neutral/50">
+                            <p >#1 by john_doe</p>
+                            
+                            <p>1/15/2025</p>
+                        </div>
+                        
+
+                        
+                    </div>
+                </div>
+                <div class="card card-border bg-base-100 ">
+                    <div class="card-body">
+                        <h2 class="card-title">Card Title</h2>
+                        <p>A card component has a figure, a body part, and inside body there are title and actions parts
+                        </p>
+                        <div class="card-actions justify-end">
+                            <button class="btn btn-primary">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-border bg-base-100 ">
+                    <div class="card-body">
+                        <h2 class="card-title">Card Title</h2>
+                        <p>A card component has a figure, a body part, and inside body there are title and actions parts
+                        </p>
+                        <div class="card-actions justify-end">
+                            <button class="btn btn-primary">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-border bg-base-100 ">
+                    <div class="card-body">
+                        <h2 class="card-title">Card Title</h2>
+                        <p>A card component has a figure, a body part, and inside body there are title and actions parts
+                        </p>
+                        <div class="card-actions justify-end">
+                            <button class="btn btn-primary">Buy Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Spinner -->
+
+        <section id="spinner" class="flex justify-center items-center py-10 ">
+        <span class="loading loading-spinner loading-xl"></span>
+    </section>
+
+
+
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
