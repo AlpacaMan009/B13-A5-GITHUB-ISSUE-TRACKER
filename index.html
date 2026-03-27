@@ -89,11 +89,11 @@
         <div class="bg-white px-4 py-3 mt-12 rounded-md">
             <div class=" space-x-1">
 
-                <button onclick="toggleStyle('all-filter-btn')" class="btn btn-primary px-5 py-2"
-                    id="all-filter-btn">All</button>
-                <button onclick="toggleStyle('thriving-btn')" class="btn  bg-white text-gray-400 px-5 py-2"
+                <button id="btn-all" class="btn filter-btn btn-primary px-5 py-2 active"
+                    >All</button>
+                <button class="btn filter-btn bg-white text-gray-400 px-5 py-2"
                     id="open-btn">Open</button>
-                <button onclick="toggleStyle('struggling-btn')" class="btn  bg-white text-gray-400 px-5 py-2"
+                <button class="btn filter-btn  bg-white text-gray-400 px-5 py-2"
                     id="Closed-btn">Closed</button>
 
             </div>
@@ -136,7 +136,7 @@
 
         <!-- Card Section -->
         <section class="py-4 px-2 col-span-4 bg-[#fbfbfb] ">
-            <div class="grid grid-cols-4 gap-3 ">
+            <div class="grid grid-cols-4 gap-3" id="card-container">
                 <div class="card card-border bg-base-100 shadow-xl border-t-4 border-green-600 ">
                     <div class="card-body">
                         <div class="flex justify-between items-center">

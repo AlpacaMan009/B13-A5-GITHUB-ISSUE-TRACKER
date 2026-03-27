@@ -31,3 +31,29 @@ const manageSpinner = (status) => {
         document.getElementById("word-container").classList.remove("hidden")
     }
 }
+
+
+// const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues"
+// fetch(url)
+// .then(res => res.json())
+// .then(data => console.log(data.data))
+
+
+
+// Remoev active class from all buttons
+
+const removeActive = () =>{
+    const filterBtns = document.querySelectorAll(".filter-btn");
+    console.log("found filter btns:" , filterBtns)
+    filterBtns.forEach(btn => btn.classList.remove("active"));
+}
+
+const activeBtn = (btnId) =>{
+    const button = document.getElementById(btnId);
+    button.classList.add("active");
+}
+
+
+
+
+
