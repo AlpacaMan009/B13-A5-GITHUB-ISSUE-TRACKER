@@ -16,10 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
 
 
-    <!-- font awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
     <style>
         * {
@@ -82,7 +79,7 @@
     </header>
 
 
-    <main class="w-[80%] mx-auto">
+    <main class="w-[95%] sm:w-[90%] md:w-[85%] lg:w-[80%] mx-auto px-2 sm:px-4">
 
         <!-- btn section -->
 
@@ -134,8 +131,8 @@
         <!-- Card Section -->
         <section class="py-4 px-2 col-span-4 bg-[#fbfbfb] ">
             <div class="grid grid-cols-4 gap-3" id="card-container">
-                
-                
+
+
             </div>
         </section>
 
@@ -146,6 +143,64 @@
             <span class="loading loading-spinner loading-xl"></span>
         </section>
 
+
+
+        <!-- Modal -->
+
+        <!-- Open the modal using ID.showModal() method -->
+        <!-- Clickable Card - Click anywhere to open modal -->
+        <!-- Open the modal using ID.showModal() method -->
+        <!-- THE CARD - Clicking anywhere on this opens the modal -->
+        <!-- Open the modal using ID.showModal() method -->
+        <button class="btn" onclick="my_modal_5.showModal()">open modal</button>
+        <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+            <div class="modal-box w-3/4 max-w-none  overflow-hidden ">
+                <h3 class="text-lg font-bold mb-2">Fix broken image uploads</h3>
+                <div class="flex justify-start gap-2 items-center">
+                    <p class="text-[12px] font-medium  text-center rounded-2xl px-3 py-1 bg-[#00a96e] text-white">Opened
+                    </p>
+                    <span class="text-[#64748b]">•</span>
+                    <p class="text-[12px] text-[#64748b]">Opened by Fahim Ahmed</p>
+                    <span class="text-[#64748b]">•</span>
+                    <p class="text-[12px] text-[#64748b]">22/02/2026</p>
+                </div>
+
+                <div class="flex justify-start gap-2 items-center my-5">
+                    <p
+                        class="text-[12px] font-medium  text-center rounded-2xl px-3 py-1 text-[#ef4444] bg-[#feecec] border-[#fecaca]">
+                        Bug</p>
+                    <p
+                        class="text-[12px] font-medium  text-center rounded-2xl px-3 py-1 text-[#d97706] bg-[#fff8db] border-[#fde68a]">
+                        Help Wanted</p>
+                </div>
+
+                <div>
+                    <p class="text-[#64748b] text-sm">The navigation menu doesn't collapse properly on mobile devices.
+                        Need to fix the responsive behavior.</p>
+                </div>
+
+
+
+                <div class="bg-slate-100 mx-auto mt-5 rounded-lg">
+                    <div class="flex justify-between px-5 py-3">
+                        <div class="flex flex-col gap-1">
+                            <p class="text-[#64748b] text-sm">Assignee:</p>
+                            <p class="font-bold">Fahim Ahmed</p>
+                        </div>
+                        <div>
+                            <p class="text-[#64748b] text-sm mb-1">Priority:</p>
+                            <p class="text-[12px] font-medium  text-center rounded-2xl px-4 py-1 text-white bg-[#ef4444]">HIGH</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-action">
+                    <form method="dialog">
+                        <!-- if there is a button in form, it will close the modal -->
+                        <button class="btn bg-purple-800 text-white">Close</button>
+                    </form>
+                </div>
+            </div>
+        </dialog>
 
 
 

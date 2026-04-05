@@ -20,10 +20,10 @@ document.getElementById("signIn-btn").addEventListener("click", function () {
 const manageSpinner = (status) => {
   if (status == true) {
     document.getElementById("spinner").classList.remove("hidden");
-    document.getElementById("word-container").classList.add("hidden");
+    
   } else {
     document.getElementById("spinner").classList.add("hidden");
-    document.getElementById("word-container").classList.remove("hidden");
+    
   }
 };
 
@@ -47,19 +47,22 @@ const activeBtn = (btnId) => {
 
 // Displaying Filtered Cards
 const filteredCardsDisplay = (filter) => {
-  let filterCards = "";
+  let filterCard = [];
 
   if (filter === "all") {
-    filterCards == cardsData;
-  } else if (filter === "opened") {
-    filterCard = cardData.filter((card) => card.status === "opened");
+    filterCard = cardsData;
+  } else if (filter === "open") {
+    filterCard = cardsData.filter((card) => card.status === "open");
   } else if (filter === "closed") {
-    filterCard = cardData.filter((card) => card.status === "closed");
+    filterCard = cardsData.filter((card) => card.status === "closed");
   }
+
+  displayCards(filterCard)
 };
 
 // Rendering labels
 const renderLabels = (labels) => {
+    if (!labels || labels.length === 0) return '';
   let labelHTML = "";
   labels.forEach((label) => {
     let labelStyle = "";
@@ -67,9 +70,9 @@ const renderLabels = (labels) => {
     if (label === "bug") {
       labelStyle = "text-[#ef4444] bg-[#feecec] border-[#fecaca]";
     } else if (label === "help wanted") {
-      labelStyles = "text-[#d97706] bg-[#fff8db] border-[#fde68a]";
+      labelStyle = "text-[#d97706] bg-[#fff8db] border-[#fde68a]";
     } else if (label === "enhancement") {
-      labelStyles = "text-[#00a96e] bg-[#defce8] border-[#bbf7d0]";
+      labelStyle = "text-[#00a96e] bg-[#defce8] border-[#bbf7d0]";
     }
 
     labelHTML += `
@@ -78,12 +81,23 @@ const renderLabels = (labels) => {
             </h3>
         `;
   });
+
+  return labelHTML;
 };
 
 // Display cards
 const displayCards = (cards) => {
   const container = document.getElementById("card-container");
+  if (!container) {
+    console.error("Container not found!");
+    return;
+  }
   container.innerHTML = '';
+
+   if (!cards || cards.length === 0) {
+    container.innerHTML = '<p class="col-span-4 text-center py-8">No cards to display</p>';
+    return;
+  }
 
   cards.forEach((card) => {
     const cardElements = document.createElement("div");
@@ -99,7 +113,7 @@ const displayCards = (cards) => {
         <div class="card-body">
                         <div class="flex justify-between items-center">
 
-                            <img src="${card.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed-Status.png"}">
+                            <img src="${card.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed- Status .png"}">
 
                             <h3
                                 class="text-[12px] font-medium  text-center rounded-2xl px-4 py-1 
@@ -110,15 +124,15 @@ const displayCards = (cards) => {
                                       ? "text-[#d97706] bg-[#fff8db]"
                                       : card.priority == "low"
                                         ? "text-[#9ca3af] bg-[#eeeff2]"
-                                        : ""
+                                        : "text-[#6b7280] bg-[#f3f4f6]"
                                 }">
-                                ${card.priority.toUpperCase()}
+                                ${card.priority ? card.priority.toUpperCase() : 'NONE'}
                                 </h3>
 
                         </div>
 
-                        <h2 class="card-title">${card.title}</h2>
-                        <p>${card.description}
+                        <h2 class="card-title">${card.title || "UNTITLED"}</h2>
+                        <p>${card.description || "NO DESCRIPTION"}
                         </p>
 
                         <div class="flex gap-2">
@@ -134,7 +148,7 @@ const displayCards = (cards) => {
                         </div>
 
                         <div class="text-neutral/50">
-                            <p>#${card.id} by ${card.author}</p>
+                            <p>#${card.id || "N/A"} by ${card.author || "NO AUTHOR"}</p>
 
                             <p>${card.createdAt}</p>
                         </div>
@@ -147,3 +161,52 @@ const displayCards = (cards) => {
         container.appendChild(cardElements)
   });
 };
+
+
+// handle buttons'
+
+const handleBtns = (filter,btnId) => {
+
+    removeActive();
+
+    activeBtn(btnId);
+
+    filteredCardsDisplay(filter)
+}
+
+
+// showing card data
+
+let cardsData = [];
+
+const loadData =async () => {
+    manageSpinner(true);
+
+    const url = " https://phi-lab-server.vercel.app/api/v1/lab/issues "
+
+    const res = await fetch(url);
+    const data = await res.json();
+
+    if(data && data.data){
+        cardsData = data.data;
+        filteredCardsDisplay("all")
+    }
+
+    manageSpinner(false)
+
+
+}
+
+document.getElementById("btn-all").addEventListener("click", () => {
+    handleBtns("all", "btn-all");
+});
+
+document.getElementById("open-btn").addEventListener("click", () => {
+    handleBtns("open", "open-btn");
+});
+
+document.getElementById("Closed-btn").addEventListener("click", () => {
+    handleBtns("closed", "Closed-btn");
+});
+
+loadData();
