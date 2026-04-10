@@ -1,3 +1,15 @@
+function updateIssueCount(cards) {
+  const countElement = document.getElementById('issue-count');
+  if (countElement) countElement.textContent = `${cards.length} Issues`;
+}
+
+// 
+
+// const openCards = allCards.filter(card => card.status === 'open');
+// updateIssueCount(openCards);
+// displayCards(openCards);
+
+
 document.getElementById("signIn-btn").addEventListener("click", function () {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
@@ -20,19 +32,12 @@ document.getElementById("signIn-btn").addEventListener("click", function () {
 const manageSpinner = (status) => {
   if (status == true) {
     document.getElementById("spinner").classList.remove("hidden");
-    
   } else {
     document.getElementById("spinner").classList.add("hidden");
-    
   }
 };
 
-// const url = "https://phi-lab-server.vercel.app/api/v1/lab/issues"
-// fetch(url)
-// .then(res => res.json())
-// .then(data => console.log(data.data))
 
-// Remoev active class from all buttons
 
 const removeActive = () => {
   const filterBtns = document.querySelectorAll(".filter-btn");
@@ -57,12 +62,13 @@ const filteredCardsDisplay = (filter) => {
     filterCard = cardsData.filter((card) => card.status === "closed");
   }
 
-  displayCards(filterCard)
+  updateIssueCount(filterCard);
+  displayCards(filterCard);
 };
 
 // Rendering labels
 const renderLabels = (labels) => {
-    if (!labels || labels.length === 0) return '';
+  if (!labels || labels.length === 0) return "";
   let labelHTML = "";
   labels.forEach((label) => {
     let labelStyle = "";
@@ -85,6 +91,89 @@ const renderLabels = (labels) => {
   return labelHTML;
 };
 
+
+function updateModalWithIssueData(issue) {
+  const modalBox = document.querySelector('#my_modal_5 .modal-box');
+  if (!modalBox) return;
+
+  const priorityClass =
+    issue.priority === 'high'   ? 'text-[#ef4444] bg-[#feecec]' :
+    issue.priority === 'medium' ? 'text-[#d97706] bg-[#fff8db]' :
+    issue.priority === 'low'    ? 'text-[#9ca3af] bg-[#eeeff2]' :
+                                  'text-[#6b7280] bg-[#f3f4f6]';
+
+  modalBox.innerHTML = `
+    <div class="flex justify-between items-center mb-4">
+      <img src="${issue.status === 'open' ? './assets/Open-Status.png' : './assets/Closed- Status .png'}">
+      <h3 class="text-[12px] font-medium text-center rounded-2xl px-4 py-1 ${priorityClass}">
+        ${issue.priority ? issue.priority.toUpperCase() : 'NONE'}
+      </h3>
+    </div>
+
+    <h3 class="font-bold text-lg">${issue.title || 'Untitled Issue'}</h3>
+
+    <div class="flex justify-start gap-2 items-center mt-1">
+      <p class="text-white px-3 py-2 bg-green-600 text-sm rounded-3xl">Opened </p>
+      <p class="text-[#64748b] text-sm">by ${issue.author || 'Unknown'}</p>
+      <p class="text-[#64748b] text-sm">${issue.createdAt}</p>
+    </div>
+
+    <div class="flex justify-start gap-2 items-center my-5">
+      ${renderLabels(issue.labels)}
+    </div>
+
+    <div class="mb-4">
+      <p class="text-[#64748b] text-sm">${issue.description || 'No description provided'}</p>
+    </div>
+
+    <div class="relative -mx-6 my-1">
+      <hr class="w-full border-t border-gray-100">
+    </div>
+
+    <div class="bg-slate-100 rounded-xl p-4 mt-4 flex justify-between items-center">
+      <div>
+        <p class="text-xs text-[#64748b]">Assignee</p>
+        <p class="font-bold">${issue.assignee || issue.author || 'Unassigned'}</p>
+      </div>
+      <div>
+        <p class="text-xs text-[#64748b]">Priority</p>
+        <p class="text-[12px] font-medium text-center rounded-2xl px-4 py-1 ${priorityClass}">
+          ${issue.priority ? issue.priority.toUpperCase() : 'NONE'}
+        </p>
+      </div>
+      <div>
+        
+      </div>
+    </div>
+
+    <div class="text-neutral/50 mt-4">
+      <p>#${issue.id || 'N/A'} by ${issue.author || 'NO AUTHOR'}</p>
+    </div>
+
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn text-white bg-purple-700">Close</button>
+      </form>
+    </div>
+  `;
+}
+
+function openModalWithCardData(cardData) {
+  const modal = document.getElementById('my_modal_5');
+
+  updateModalWithIssueData(cardData);
+  modal.showModal();
+
+  fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/${cardData.id}`)
+    .then(res => {
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res.json();
+    })
+    .then(data => {
+      updateModalWithIssueData(data.data || data);
+    })
+    
+}
 // Display cards
 const displayCards = (cards) => {
   const container = document.getElementById("card-container");
@@ -92,10 +181,11 @@ const displayCards = (cards) => {
     console.error("Container not found!");
     return;
   }
-  container.innerHTML = '';
+  container.innerHTML = "";
 
-   if (!cards || cards.length === 0) {
-    container.innerHTML = '<p class="col-span-4 text-center py-8">No cards to display</p>';
+  if (!cards || cards.length === 0) {
+    container.innerHTML =
+      '<p class="col-span-4 text-center py-8">No cards to display</p>';
     return;
   }
 
@@ -126,13 +216,13 @@ const displayCards = (cards) => {
                                         ? "text-[#9ca3af] bg-[#eeeff2]"
                                         : "text-[#6b7280] bg-[#f3f4f6]"
                                 }">
-                                ${card.priority ? card.priority.toUpperCase() : 'NONE'}
+                                ${card.priority ? card.priority.toUpperCase() : "NONE"}
                                 </h3>
 
                         </div>
 
                         <h2 class="card-title">${card.title || "UNTITLED"}</h2>
-                        <p>${card.description || "NO DESCRIPTION"}
+                        <p class="line-clamp-1">${card.description || "NO DESCRIPTION"}
                         </p>
 
                         <div class="flex gap-2">
@@ -158,55 +248,78 @@ const displayCards = (cards) => {
                     </div>        
         `;
 
-        container.appendChild(cardElements)
+    cardElements.addEventListener("click", () => openModalWithCardData(card));
+    cardElements.style.cursor = "pointer";
+
+    container.appendChild(cardElements);
   });
 };
 
-
 // handle buttons'
 
-const handleBtns = (filter,btnId) => {
+const handleBtns = (filter, btnId) => {
+  removeActive();
 
-    removeActive();
+  activeBtn(btnId);
 
-    activeBtn(btnId);
-
-    filteredCardsDisplay(filter)
-}
-
+  filteredCardsDisplay(filter);
+};
 
 // showing card data
 
 let cardsData = [];
 
-const loadData =async () => {
-    manageSpinner(true);
+const loadData = async () => {
+  manageSpinner(true);
 
-    const url = " https://phi-lab-server.vercel.app/api/v1/lab/issues "
+  const url = " https://phi-lab-server.vercel.app/api/v1/lab/issues ";
 
-    const res = await fetch(url);
-    const data = await res.json();
+  const res = await fetch(url);
+  const data = await res.json();
 
-    if(data && data.data){
-        cardsData = data.data;
-        filteredCardsDisplay("all")
-    }
+  if (data && data.data) {
+    cardsData = data.data;
+    filteredCardsDisplay("all");
+  }
 
-    manageSpinner(false)
-
-
-}
+  manageSpinner(false);
+};
 
 document.getElementById("btn-all").addEventListener("click", () => {
-    handleBtns("all", "btn-all");
+  handleBtns("all", "btn-all");
 });
 
 document.getElementById("open-btn").addEventListener("click", () => {
-    handleBtns("open", "open-btn");
+  handleBtns("open", "open-btn");
 });
 
 document.getElementById("Closed-btn").addEventListener("click", () => {
-    handleBtns("closed", "Closed-btn");
+  handleBtns("closed", "Closed-btn");
 });
+
+document.getElementById("btn-search").addEventListener("click", () => {
+  removeActive();
+  const input = document.getElementById("input-search");
+  const searchValue = input.value.trim().toLowerCase();
+  console.log(searchValue);
+
+  fetch(
+    "https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}",
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      const allCards = data.data;
+      console.log(allCards);
+      const filterWords = allCards.filter((card) =>
+        card.card.toLowerCase().includes(searchValue),
+      );
+
+      displayCards(filterCard);
+    });
+});
+
+
+
+
 
 loadData();
