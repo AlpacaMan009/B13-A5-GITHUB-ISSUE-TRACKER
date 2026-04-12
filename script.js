@@ -3,29 +3,6 @@ function updateIssueCount(cards) {
   if (countElement) countElement.textContent = `${cards.length} Issues`;
 }
 
-// 
-
-// const openCards = allCards.filter(card => card.status === 'open');
-// updateIssueCount(openCards);
-// displayCards(openCards);
-
-
-document.getElementById("signIn-btn").addEventListener("click", function () {
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-
-  console.log(username);
-  console.log(password);
-
-  const defUsername = "admin";
-  const defPassword = "admin123";
-
-  if (username === defUsername && password === defPassword) {
-    alert("Login Successfull!!");
-  } else {
-    alert("Login Failed");
-  }
-});
 
 // Spinner
 
@@ -297,24 +274,20 @@ document.getElementById("Closed-btn").addEventListener("click", () => {
   handleBtns("closed", "Closed-btn");
 });
 
+
+
+// search functionality
 document.getElementById("btn-search").addEventListener("click", () => {
   removeActive();
   const input = document.getElementById("input-search");
   const searchValue = input.value.trim().toLowerCase();
-  console.log(searchValue);
 
-  fetch(
-    "https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q={searchText}",
-  )
+  fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
     .then((res) => res.json())
     .then((data) => {
-      const allCards = data.data;
-      console.log(allCards);
-      const filterWords = allCards.filter((card) =>
-        card.card.toLowerCase().includes(searchValue),
-      );
-
-      displayCards(filterCard);
+      const searchResults = data.data || [];
+      updateIssueCount(searchResults);
+      displayCards(searchResults);
     });
 });
 

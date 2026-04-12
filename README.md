@@ -75,7 +75,7 @@
 ### 🚀 Challenges
 
 
-- Show the card Top border based on their category(open, closed), open card will have Green Boder, closed card will have a purple border on top. 
+- Show the card Top border based on their category(open, closed), open card will have Green Border, closed card will have a purple border on top. 
 
 - Loading spinner on data load
 
