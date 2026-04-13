@@ -10,7 +10,7 @@ document.getElementById("signIn-btn").addEventListener("click", function () {
 
   if (username === defUsername && password === defPassword) {
     alert("Sign-in Successfull!!");
-    localStorage.setItem("loggedIn", "true");
+    // localStorage.setItem("loggedIn", "true");
     window.location.assign("dashboard.html")
   } else {
     alert("Sign-in Failed");
